@@ -1,32 +1,57 @@
 // import { CssBaseline } from "@mui/material";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import { Home } from "@mui/icons-material";
-import Sidebar from "./components/Sidebar";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
-const Layout = (
-  <div>
+import Navbar from "./components/navbar/Navbar";
+import Sidebar from "./components/sidebar/Sidebar";
+import Home from "./pages/home/Home";
+import MovieInfo from "./pages/movieInfo/MovieInfo";
+import Actors from "./pages/actors/Actors";
+import Profile from "./pages/profile/Profile";
+
+const Layout = () => (
+  <div className="bg-primary-dark text-soft min-h-screen font-display">
     <Navbar />
-    <Sidebar />
-    <div>
-      <Outlet />
-    </div>
+    <main className="flex">
+      <div className="sidebar-container w-1/6 p-3">
+        <Sidebar />
+      </div>
+      <div className="content-container w-5/6 p-3">
+        <Outlet />
+      </div>
+    </main>
   </div>
 );
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/movies/:id",
+        element: <MovieInfo />,
+      },
+      {
+        path: "/actors/:id",
+        element: <Actors />,
+      },
+      {
+        path: "/profile/:id",
+        element: <Profile />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return (
     <>
       {/* <CssBaseline /> */}
-      <Routes>
-        <Route path="/" element={Layout}>
-          <Route index element={<Home />} />
-
-          {/* Using path="*"" means "match anything", so this route
-                acts like a catch-all for URLs that we don't have explicit
-                routes for. */}
-        </Route>
-      </Routes>
+      <RouterProvider router={router} />
     </>
   );
 }
