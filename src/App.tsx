@@ -12,10 +12,10 @@ const Layout = () => (
   <div className="bg-primary-dark text-soft min-h-screen font-display">
     <Navbar />
     <main className="flex">
-      <div className="sidebar-container w-1/6 p-3">
+      {/* <div className="sidebar-container w-1/6 p-3">
         <Sidebar />
-      </div>
-      <div className="content-container w-5/6 p-3">
+      </div> */}
+      <div className="content-container w-full">
         <Outlet />
       </div>
     </main>

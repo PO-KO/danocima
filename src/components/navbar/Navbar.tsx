@@ -2,6 +2,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { TextField } from "@mui/material";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -17,7 +19,13 @@ const Navbar = () => {
   console.log(searchKeyword);
 
   return (
-    <div className="navbar bg-primary-dark h-16">
+    <div
+      className="navbar h-16 absolute z-50 w-full "
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(23,24,26,1) 30%, rgba(23,24,26,0) 100%)",
+      }}
+    >
       <div className="navbar-container flex justify-between items-center h-full p-3">
         <div className="left flex items-center gap-5 max-md:w-full max-md:justify-between">
           <div className="md:hidden cursor-pointer">
@@ -34,6 +42,7 @@ const Navbar = () => {
               onChange={handleSearchbarChange}
               value={searchKeyword}
             />
+
             <span className="search-icon" onClick={() => setShowSearch(true)}>
               <SearchIcon
                 sx={{ fontSize: 23 }}
@@ -45,23 +54,23 @@ const Navbar = () => {
         <div className="right hidden md:block">
           <ul className="links flex gap-4 items-center text-sm">
             <li className="link-item hover:text-secondary">
-              <a href="#">Home</a>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <a href="#">Movies</a>
+              <NavLink to="/movies">Movies</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <a href="#">TV Shows</a>
+              <NavLink to="shows">TV Shows</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <a href="#" className="flex items-center gap-1">
+              <NavLink to="/profile/:id" className="flex items-center gap-1">
                 <span>{isLogin ? "name" : "Login"}</span>
                 {isLogin ? (
                   <img src="" alt="profile picture" />
                 ) : (
                   <AccountCircleIcon />
                 )}
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>
