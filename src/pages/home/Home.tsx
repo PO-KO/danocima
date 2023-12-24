@@ -32,7 +32,7 @@ const Home = () => {
         {errorMovies && <div>{errorMovies}</div>}
         {isFetchingMovies && <div>Loading...</div>}
       </div>
-      <div className="content-container p-3">
+      <div className="content-container px-1">
         {!isFetchingMovies && !errorMovies && (
           <ItemsList data={dataMovies.results} heading={"Movies"} />
         )}
