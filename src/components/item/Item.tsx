@@ -1,23 +1,9 @@
 import { Link } from "react-router-dom";
 import StarIcon from "@mui/icons-material/Star";
 import { useGetMoviesGenersQuery } from "../../services/TMDB";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
-type Props = {
-  id: number;
-  poster_path: string;
-  title: string;
-  overview: string;
-  original_language: string;
-  vote_average: number;
-  release_date?: string;
-  first_air_date?: any;
-  lastChild?: number;
-  firstChild?: number;
-  genre_ids: (number | string)[];
-  setShowRightArrow: (value: boolean) => void;
-  setShowLeftArrow: (value: boolean) => void;
-};
+import { ItemType } from "../../types/types";
 
 // Genres type
 
@@ -33,36 +19,36 @@ const Item = ({
   release_date,
   original_language,
   overview,
-  lastChild,
-  firstChild,
+  // lastChild,
+  // firstChild,
   id,
   genre_ids,
   first_air_date,
-  setShowRightArrow,
-  setShowLeftArrow,
-}: Props) => {
+}: // setShowRightArrow,
+// setShowLeftArrow,
+ItemType) => {
   // fetching items data (Movies or TV)
   const { data, error, isFetching } = useGetMoviesGenersQuery(null);
-  const { ref, inView } = useInView({
-    threshold: 1,
-  });
+  // const { ref, inView } = useInView({
+  //   threshold: 0,
+  // });
 
   // Handel slider indecators
-  useEffect(() => {
-    if (lastChild === id && inView) {
-      setShowRightArrow(false);
-    } else {
-      setShowRightArrow(true);
-    }
+  // useEffect(() => {
+  //   if (lastChild === id && inView) {
+  //     setShowRightArrow(false);
+  //   } else {
+  //     setShowRightArrow(true);
+  //   }
 
-    if (firstChild === id) {
-      if (inView) {
-        setShowLeftArrow(false);
-      } else {
-        setShowLeftArrow(true);
-      }
-    }
-  }, [inView, ref, lastChild, firstChild]);
+  //   if (firstChild === id) {
+  //     if (inView) {
+  //       setShowLeftArrow(false);
+  //     } else {
+  //       setShowLeftArrow(true);
+  //     }
+  //   }
+  // }, [inView, ref, lastChild, firstChild]);
 
   const releaseDate = release_date // Get the released year
     ? new Date(release_date).getFullYear()
@@ -78,7 +64,7 @@ const Item = ({
           src={`https://image.tmdb.org/t/p/original${poster_path}`}
           alt={title}
           className="rounded-sm h-full"
-          ref={ref}
+          // ref={ref}
         />
         <div
           className={`max-lg:hidden info absolute w-[calc(100%+4px)] h-full bg-primary-dark top-full left-0 group-hover/item:top-0 rounded-r-sm p-3 flex flex-col justify-between -z-10 group-hover/item:z-10 opacity-0 group-hover/item:opacity-100 transition-all duration-300`}

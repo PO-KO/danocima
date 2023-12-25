@@ -1,52 +1,34 @@
-import { useRef, useState } from "react";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 import Item from "../item/Item";
+import { ItemsListTypes } from "../../types/types";
+import Carousel from "nuka-carousel";
 
-type Props = {
-  data: {
-    id: number;
-    poster_path: string;
-    title: string;
-    overview: string;
-    original_language: string;
-    vote_average: number;
-    release_date?: string;
-    first_air_date?: string | number | Date | undefined;
-    genre_ids: (number | string)[];
-  }[];
-  heading: string;
-};
+const ItemsList = ({ data, heading }: ItemsListTypes) => {
+  // const sliderRef = useRef<HTMLDivElement>(null!);
+  // const [showRightArrow, setShowRightArrow] = useState<boolean>(true);
+  // const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
 
-const ItemsList = ({ data, heading }: Props) => {
-  const sliderRef = useRef<HTMLDivElement>(null!);
-  const [showRightArrow, setShowRightArrow] = useState<boolean>(true);
-  const [showLeftArrow, setShowLeftArrow] = useState<boolean>(false);
+  // const handleClick = (direction: string) => {
+  //   let distance = sliderRef.current.getBoundingClientRect().x - 4;
+  //   let itemWidth =
+  //     sliderRef.current.children[0].children[0].getBoundingClientRect().width;
+  //   // Controling slider with left arrow
+  //   if (direction === "left" && showLeftArrow) {
+  //     sliderRef.current.style.transform = `translateX(${
+  //       itemWidth + distance
+  //     }px)`;
+  //   }
+  //   // Controling slider with right arrow
+  //   if (direction === "right" && showRightArrow) {
+  //     sliderRef.current.style.transform = `translateX(${
+  //       distance - itemWidth
+  //     }px)`;
+  //   }
+  // };
 
-  const handleClick = (direction: string) => {
-    let distance = sliderRef.current.getBoundingClientRect().x - 4;
-
-    let itemWidth =
-      sliderRef.current.children[0].children[0].getBoundingClientRect().width;
-
-    console.log(itemWidth);
-
-    if (direction === "left" && showLeftArrow) {
-      sliderRef.current.style.transform = `translateX(${
-        itemWidth + distance
-      }px)`;
-    }
-
-    if (direction === "right" && showRightArrow) {
-      sliderRef.current.style.transform = `translateX(${
-        distance - itemWidth
-      }px)`;
-    }
-    console.log(sliderRef.current.getBoundingClientRect());
-  };
-
-  const lastChild = data[data.length - 1].id;
-  const firstChild = data[0].id;
+  // const lastChild = data[data.length - 1].id;
+  // const firstChild = data[0].id;
 
   return (
     <div className="mb-10">
@@ -57,7 +39,7 @@ const ItemsList = ({ data, heading }: Props) => {
         </span>
       </h1>
       <div className="wrapper overflow-hidden relative">
-        {showLeftArrow && (
+        {/* {showLeftArrow && (
           <div
             className="indicator left absolute top-0 left-0 z-10 h-full w-10 bg-secondary flex justify-center items-center cursor-pointer"
             onClick={() => handleClick("left")}
@@ -68,24 +50,38 @@ const ItemsList = ({ data, heading }: Props) => {
           >
             <ArrowBackIos />
           </div>
-        )}
-        <div className="slider transition-transform" ref={sliderRef}>
-          <div className="flex gap-1">
-            {data.map((item) => {
-              return (
-                <Item
-                  key={item.id}
-                  {...item}
-                  lastChild={lastChild}
-                  firstChild={firstChild}
-                  setShowRightArrow={setShowRightArrow}
-                  setShowLeftArrow={setShowLeftArrow}
-                />
-              );
-            })}
-          </div>
-        </div>
-        {showRightArrow && (
+        )} */}
+        <Carousel
+          slidesToShow={8}
+          cellSpacing={3}
+          defaultControlsConfig={{
+            nextButtonText: <ArrowForwardIos />,
+            prevButtonText: <ArrowBackIos />,
+            containerClassName: "h-full",
+            nextButtonClassName: "h-full",
+            prevButtonClassName: "h-full",
+          }}
+          dragging={false}
+          enableKeyboardControls={true}
+          wrapAround={true}
+        >
+          {data.map((item) => {
+            return (
+              <Item
+                key={item.id}
+                {...item}
+                // lastChild={lastChild}
+                // firstChild={firstChild}
+                // setShowRightArrow={setShowRightArrow}
+                // setShowLeftArrow={setShowLeftArrow}
+              />
+            );
+          })}
+        </Carousel>
+        {/* <div className="slider transition-transform" ref={sliderRef}>
+          <div className="flex gap-1"></div>
+        </div> */}
+        {/* {showRightArrow && (
           <div
             className="indicator right absolute top-0 right-0 z-10 h-full w-10 bg-secondary flex justify-center items-center cursor-pointer"
             onClick={() => handleClick("right")}
@@ -96,7 +92,7 @@ const ItemsList = ({ data, heading }: Props) => {
           >
             <ArrowForwardIos />
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

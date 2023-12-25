@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const tmdbApiKey = import.meta.env.VITE_TMDB_KEY;
 
 const page = 1;
+const timeWindow = "day";
 
 type Content = {
   data: Object;
@@ -24,8 +25,16 @@ export const tmdbApi = createApi({
     getTv: builder.query<Content, any>({
       query: () => `tv/popular?page=${page}&api_key=${tmdbApiKey}`,
     }),
+    // Get Trending Movies
+    getTrendingMovies: builder.query({
+      query: () => `trending/movie/${timeWindow}?api_key=${tmdbApiKey}`,
+    }),
   }),
 });
 
-export const { useGetMoviesQuery, useGetMoviesGenersQuery, useGetTvQuery } =
-  tmdbApi;
+export const {
+  useGetMoviesQuery,
+  useGetMoviesGenersQuery,
+  useGetTvQuery,
+  useGetTrendingMoviesQuery,
+} = tmdbApi;

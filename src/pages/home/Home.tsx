@@ -1,52 +1,53 @@
 import { useGetMoviesQuery, useGetTvQuery } from "../../services/TMDB";
 import ItemsList from "../../components/itemsList/ItemsList";
 import Hero from "../../components/hero/Hero";
-
-type Status = {
-  data: {
-    results: any[];
-  };
-  error: string;
-  isFetching: boolean;
-};
+import { DataStatus } from "../../types/types";
 
 const Home = () => {
+  // Get popular movies from TMDB Api
+
   const {
     data: dataMovies,
     error: errorMovies,
     isFetching: isFetchingMovies,
-  } = useGetMoviesQuery<Status>(null);
+  } = useGetMoviesQuery<DataStatus>(null);
+
+  // Get popular TV shows from TMDB Api
 
   const {
     data: dataTv,
     error: errorTv,
-    isFetching: isFectchingTv,
-  } = useGetTvQuery<Status>(null);
+    isFetching: isFetchingTv,
+  } = useGetTvQuery<DataStatus>(null);
 
-  return (
-    <div className="home">
-      <div className="hero-container">
-        {!isFetchingMovies && !errorMovies && (
+  // Rendering content
+  let content;
+
+  if (!isFetchingMovies && !isFetchingTv && !errorMovies && !errorTv) {
+    console.log("Hello");
+
+    content = (
+      <>
+        <section className="hero-container">
           <Hero data={dataMovies.results.slice(0, 5)} />
-        )}
-        {errorMovies && <div>{errorMovies}</div>}
-        {isFetchingMovies && <div>Loading...</div>}
-      </div>
-      <div className="content-container px-1">
-        {!isFetchingMovies && !errorMovies && (
+        </section>
+        <section className="content-container px-1">
           <ItemsList data={dataMovies.results} heading={"Movies"} />
-        )}
-        {isFetchingMovies && <div>Loading...</div>}
-        {errorMovies && <div>{errorMovies}</div>}
-
-        {!isFectchingTv && !errorTv && (
           <ItemsList data={dataTv.results} heading={"TV Shows"} />
-        )}
-        {isFectchingTv && <div>Loading...</div>}
-        {errorTv && <div>{errorTv}</div>}
-      </div>
-    </div>
-  );
+        </section>
+      </>
+    );
+  }
+
+  if (isFetchingMovies || isFetchingTv) {
+    content = <p>Loading...</p>;
+  }
+
+  if (errorMovies || errorTv) {
+    content = <p>Something went wrong!</p>;
+  }
+
+  return <div className="home">{content}</div>;
 };
 
 export default Home;
