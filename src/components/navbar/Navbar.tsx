@@ -3,7 +3,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { TextField } from "@mui/material";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -57,13 +56,16 @@ const Navbar = () => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <NavLink to="/movies">Movies</NavLink>
+              <NavLink to="/browse/movies">Movies</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <NavLink to="shows">TV Shows</NavLink>
+              <NavLink to="/browse/shows">TV Shows</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <NavLink to="/profile/:id" className="flex items-center gap-1">
+              <NavLink to={"/browse"}>Browse</NavLink>
+            </li>
+            <li className="link-item hover:text-secondary">
+              <NavLink to="/profile/1" className="flex items-center gap-1">
                 <span>{isLogin ? "name" : "Login"}</span>
                 {isLogin ? (
                   <img src="" alt="profile picture" />
