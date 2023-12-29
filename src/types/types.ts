@@ -16,7 +16,7 @@ export type ItemsListTypes = {
 export type ItemType = {
   id: number;
   poster_path: string;
-  title: string;
+  title?: string;
   overview: string;
   original_language: string;
   vote_average: number;
@@ -29,6 +29,7 @@ export type ItemType = {
   }[];
   windowWidth?: number;
   type: string;
+  name?: string;
 };
 
 export type DataStatus = {
@@ -46,4 +47,14 @@ export type HeroType = {
     overview: string;
     id: number;
   }[];
+};
+
+export type DataGenresAPI = {
+  id: number;
+  name: string;
+};
+export type MyDataGenres = {
+  label: string;
+  value: string;
+  id: number;
 };

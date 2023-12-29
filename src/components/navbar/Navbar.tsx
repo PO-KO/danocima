@@ -56,13 +56,10 @@ const Navbar = () => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <NavLink to="/browse/movies">Movies</NavLink>
+              <NavLink to="/browse/movie">Movies</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <NavLink to="/browse/shows">TV Shows</NavLink>
-            </li>
-            <li className="link-item hover:text-secondary">
-              <NavLink to={"/browse"}>Browse</NavLink>
+              <NavLink to="/browse/tv">TV Shows</NavLink>
             </li>
             <li className="link-item hover:text-secondary">
               <NavLink to="/profile/1" className="flex items-center gap-1">

@@ -53,7 +53,6 @@ const ItemsList = ({ data, heading }: ItemsListTypes) => {
                 <Item
                   key={item.id}
                   {...item}
-                  windowWidth={windowWidth}
                   genres={genres?.data?.genres}
                   type={heading}
                 />

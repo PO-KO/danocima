@@ -19,7 +19,7 @@ function App() {
           <Route path="shows/:id" element={<ShowInfo />} />
           <Route path="actors" element={<Actors />} />
           <Route path="profile/:id" element={<Profile />} />
-          <Route path="browse/:type?" element={<Browse />} />
+          <Route path="browse/:type" element={<Browse />} />
         </Route>
       </Routes>
     </>

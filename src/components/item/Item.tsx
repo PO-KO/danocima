@@ -13,6 +13,7 @@ const Item = ({
   first_air_date,
   genres,
   type,
+  name,
 }: ItemType) => {
   // fetching items data (Movies or TV)
 
@@ -23,7 +24,7 @@ const Item = ({
   return (
     <Link
       to={`/${type.toLowerCase()}/:id`}
-      className={`item group/item relative basis-[70px] sm:basis-[100px] md:basis-[130px] lg:basis-[176px] shrink-0 grow-0`}
+      className={`item group/item relative`}
     >
       <img
         src={`https://image.tmdb.org/t/p/original${poster_path}`}
@@ -62,12 +63,14 @@ const Item = ({
         <div className="middle poster max-h-[30%] my-2">
           <img
             src={`https://image.tmdb.org/t/p/original${poster_path}`}
-            alt={title}
+            alt={title || name}
             className="rounded-sm h-full"
           />
         </div>
         <div className="bottom">
-          <h1 className="title text-xs mb-3 font-bold line-clamp-1">{title}</h1>
+          <h1 className="title text-xs mb-3 font-bold line-clamp-1">
+            {title || name}
+          </h1>
           <p className="overview text-[9px] line-clamp-3 text-gray-300">
             {overview}
           </p>

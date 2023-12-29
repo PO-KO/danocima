@@ -8,13 +8,6 @@ const fetchGenresShows = () => {
   );
 };
 
-console.log("fafa".toLowerCase());
-
-type Genres = {
-  name: string;
-  id: number;
-};
-
 const useGenresShowsData = () => {
   return useQuery(["genres-shows"], fetchGenresShows);
 };
