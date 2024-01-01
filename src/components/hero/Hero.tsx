@@ -23,7 +23,7 @@ const Hero = ({ data }: HeroType) => {
           {title}
         </h1>
         <div className="flex gap-5">
-          <p className="overview overflow-hidden text-[8px] line-clamp-2 md:text-sm md:line-clamp-2 lg:line-clamp-2 text-gray-300 leading-relaxed ">
+          <p className="overview overflow-hidden text-[8px] line-clamp-2 md:text-sm md:line-clamp-2 lg:line-clamp-2 text-gray-300 font-thin leading-relaxed ">
             {overview}
           </p>
 

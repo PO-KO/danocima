@@ -12,8 +12,9 @@ const Item = ({
   genre_ids,
   first_air_date,
   genres,
-  type,
   name,
+  id,
+  type,
 }: ItemType) => {
   // fetching items data (Movies or TV)
 
@@ -23,7 +24,7 @@ const Item = ({
 
   return (
     <Link
-      to={`/${type.toLowerCase()}/:id`}
+      to={`/browse/${type.toLowerCase()}/${id}`}
       className={`item group/item relative overflow-hidden flex-1 bg-primary-dark`}
     >
       <img

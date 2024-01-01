@@ -1,7 +1,6 @@
 import Select, { CSSObjectWithLabel, OptionProps } from "react-select";
 import { MyDataGenres } from "../../types/types";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 type MySelectProps = {
   options: MyDataGenres[];
@@ -49,12 +48,11 @@ const styles: any = {
 };
 
 const MySelect = ({ options, type }: MySelectProps) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const handleChange = (selectedOptions: MyDataGenres[]) => {
+  const [_searchParams, setSearchParams] = useSearchParams();
+  const handleChange = (selectedOptions: any) => {
     if (type === "genres") {
       if (selectedOptions.length !== 0) {
-        let genres = selectedOptions?.map(({ value }: any) => value).join(",");
+        let genres = selectedOptions.map(({ value }: any) => value).join(",");
         setSearchParams((prev) => ({
           ...Object.fromEntries([...prev]),
           genres,
