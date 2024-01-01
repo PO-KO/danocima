@@ -16,7 +16,6 @@ export default {
       },
       gridTemplateColumns: {
         responsive: "repeat(auto-fit, minmax(15rem, 1fr))",
-        filterbox: "repeat(auto-fit, minmax(8rem, 1fr))",
       },
     },
   },

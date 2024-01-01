@@ -12,9 +12,9 @@ const fetchFiltredData = (
   lang: string
 ) => {
   return axios.get(
-    `https://api.themoviedb.org/3/discover/${type}?page=${page}&vote_average.gte=${rating}&first_air_date_year=${
-      date || ""
-    }&with_genres=${genre || ""}${
+    `https://api.themoviedb.org/3/discover/${type}?page=${page}&vote_average.gte=${rating}&${
+      type === "tv" ? "first_air_date_year" : "primary_release_year"
+    }=${date || ""}&with_genres=${genre || ""}${
       lang && `&with_original_language=${lang}`
     }&sort_by=popularity.desc&api_key=${tmdbApiKey}`
   );

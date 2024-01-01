@@ -2,7 +2,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
@@ -30,7 +30,9 @@ const Navbar = () => {
           <div className="md:hidden cursor-pointer">
             <DehazeIcon />
           </div>
-          <div className="logo text-2xl text-soft font-extrabold">Danocima</div>
+          <Link to={"/"} className="logo text-2xl text-soft font-extrabold">
+            Danocima
+          </Link>
           <div className="searchbar rounded-full border-2 overflow-hidden border-secondary px-1 py-1 flex justify-between">
             <input
               type="text"
@@ -53,13 +55,34 @@ const Navbar = () => {
         <div className="right hidden md:block">
           <ul className="links flex gap-4 items-center text-sm">
             <li className="link-item hover:text-secondary">
-              <NavLink to="/">Home</NavLink>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "border-b border-secondary pb-[2px]" : "pb-[2px]"
+                }
+              >
+                Home
+              </NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <NavLink to="/browse/movie">Movies</NavLink>
+              <NavLink
+                to="/browse/movie"
+                className={({ isActive }) =>
+                  isActive ? "border-b border-secondary pb-[2px]" : "pb-[2px]"
+                }
+              >
+                Movies
+              </NavLink>
             </li>
             <li className="link-item hover:text-secondary">
-              <NavLink to="/browse/tv">TV Shows</NavLink>
+              <NavLink
+                to="/browse/tv"
+                className={({ isActive }) =>
+                  isActive ? "border-b border-secondary pb-[2px]" : "pb-[2px]"
+                }
+              >
+                TV Shows
+              </NavLink>
             </li>
             <li className="link-item hover:text-secondary">
               <NavLink to="/profile/1" className="flex items-center gap-1">

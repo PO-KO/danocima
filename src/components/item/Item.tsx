@@ -39,7 +39,7 @@ const Item = ({
           MozBoxShadow: "7px 1px 59px -26px rgba(0,0,0,0.75) inset",
         }}
       >
-        <div className="top flex text-[9px] clamp items-center justify-between">
+        <div className="top flex text-[9px] items-center justify-between">
           <div className="top-left-info flex gap-1">
             {!Number.isNaN(releaseDate) && (
               <span className="year bg-[#344e41] px-1 rounded-sm shadow">

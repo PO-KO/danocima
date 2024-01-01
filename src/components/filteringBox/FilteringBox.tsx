@@ -71,7 +71,7 @@ const FilteringBox = ({ setFetch }: Props) => {
             type="submit"
             className="bg-secondary rounded-md px-4 font-bold max-[404px]:col-span-1 max-md:col-span-2 max-md:py-2"
           >
-            Search
+            Filter
           </button>
         </section>
       </form>
