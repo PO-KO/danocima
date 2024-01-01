@@ -54,7 +54,7 @@ export type DataGenresAPI = {
   name: string;
 };
 export type MyDataGenres = {
-  label: string;
-  value: string;
-  id: number;
+  label: string | number;
+  value: string | number;
+  id?: number;
 };

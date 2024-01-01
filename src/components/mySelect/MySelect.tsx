@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
 import Select, { CSSObjectWithLabel, OptionProps } from "react-select";
 import { MyDataGenres } from "../../types/types";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 type MySelectProps = {
   options: MyDataGenres[];
@@ -44,31 +44,14 @@ const styles: any = {
   placeholder: (baseStyle: CSSObjectWithLabel) => ({
     ...baseStyle,
     textTransform: "capitalize",
+    textWrap: "nowrap",
   }),
 };
 
 const MySelect = ({ options, type }: MySelectProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const selectHandle = (type, selectedOptions) => {
-    if (type === "genres") {
-      if (selectedOptions) {
-        let genres = selectedOptions?.map(({ value }: any) => value).join(",");
-        setSearchParams((prev) => ({
-          ...Object.fromEntries([...prev]),
-          genres,
-        }));
-        return;
-      } else {
-        setSearchParams((prev) => ({
-          genres,
-          ...Object.fromEntries([...prev]),
-        }));
-      }
-    }
-  };
-
-  const handleChange = (selectedOptions: Object[]) => {
+  const navigate = useNavigate();
+  const handleChange = (selectedOptions: MyDataGenres[]) => {
     if (type === "genres") {
       if (selectedOptions.length !== 0) {
         let genres = selectedOptions?.map(({ value }: any) => value).join(",");
@@ -106,6 +89,24 @@ const MySelect = ({ options, type }: MySelectProps) => {
         return;
       }
     }
+    if (type === "language") {
+      if (selectedOptions) {
+        setSearchParams((prev) => ({
+          ...Object.fromEntries([...prev]),
+          language: selectedOptions.value,
+        }));
+        return;
+      } else {
+        setSearchParams((prev) => {
+          const prevParam = Object.fromEntries([...prev]);
+          delete prevParam.language;
+          return {
+            ...prevParam,
+          };
+        });
+        return;
+      }
+    }
     if (type === "release date") {
       if (selectedOptions) {
         setSearchParams((prev) => ({
@@ -127,7 +128,7 @@ const MySelect = ({ options, type }: MySelectProps) => {
   };
 
   return (
-    <div className="flex-1">
+    <div className="flex-1 text">
       <Select
         options={options}
         placeholder={type}

@@ -1,25 +1,45 @@
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 
 const tmdbApiKey = import.meta.env.VITE_TMDB_KEY;
 
-const fetchFiltredData = (type, page, rating, date, genre) => {
+const fetchFiltredData = (
+  type: string,
+  page: number,
+  rating: number,
+  date: number | string,
+  genre: string,
+  lang: string
+) => {
   return axios.get(
-    `https://api.themoviedb.org/3/discover/${type}?page=${page}&vote_average.gte=${rating}&first_air_date_year=${date}&with_genres=${genre}&sort_by=popularity.desc&api_key=${tmdbApiKey}`
+    `https://api.themoviedb.org/3/discover/${type}?page=${page}&vote_average.gte=${rating}&first_air_date_year=${
+      date || ""
+    }&with_genres=${genre || ""}${
+      lang && `&with_original_language=${lang}`
+    }&sort_by=popularity.desc&api_key=${tmdbApiKey}`
   );
 };
 
 const useFilterData = (
   type: string,
-  page: number,
-  rating: number | string,
-  date: number | string = "",
-  genre: string = ""
+  rating: number,
+  date: number | string,
+  genre: string,
+  lang: string
 ) => {
-  console.log([type, page, rating, date, genre]);
-
-  return useQuery([`filtred`, type], () =>
-    fetchFiltredData(type, page, rating, date, genre)
+  return useInfiniteQuery(
+    [`filtred`, type],
+    ({ pageParam = 1 }) =>
+      fetchFiltredData(type, pageParam, rating, date, genre, lang),
+    {
+      getNextPageParam: (lastPage, pages) => {
+        if (pages.length < lastPage.data.total_pages) {
+          return pages.length + 1;
+        } else {
+          return undefined;
+        }
+      },
+    }
   );
 };
 

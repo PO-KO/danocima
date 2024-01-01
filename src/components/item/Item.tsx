@@ -24,12 +24,12 @@ const Item = ({
   return (
     <Link
       to={`/${type.toLowerCase()}/:id`}
-      className={`item group/item relative`}
+      className={`item group/item relative overflow-hidden flex-1 bg-primary-dark`}
     >
       <img
         src={`https://image.tmdb.org/t/p/original${poster_path}`}
         alt={title}
-        className="rounded-sm h-full"
+        className="rounded-sm w-full h-full object-cover"
       />
       <div
         className={`max-lg:hidden info absolute w-[calc(100%+4px)] h-full bg-primary-dark top-full left-0 group-hover/item:top-0 rounded-r-sm p-3 flex flex-col justify-between -z-10 group-hover/item:z-10 opacity-0 group-hover/item:opacity-100 transition-all duration-300`}
@@ -60,7 +60,7 @@ const Item = ({
             />
           </div>
         </div>
-        <div className="middle poster max-h-[30%] my-2">
+        <div className="middle poster max-h-[40%] my-2">
           <img
             src={`https://image.tmdb.org/t/p/original${poster_path}`}
             alt={title || name}

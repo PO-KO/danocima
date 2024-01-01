@@ -2,7 +2,10 @@ import { useParams, useSearchParams } from "react-router-dom";
 import useFilterData from "../../services/api/useFilterData";
 import Item from "../item/Item";
 import useGenresMoviesData from "../../services/api/useGenresMoviesData";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
+import { ItemType } from "../../types/types";
+import InfiniteScroll from "react-infinite-scroll-component";
+import useScrolledBottom from "../../hooks/useScrolledBottom";
 
 type Props = {
   fetch: boolean;
@@ -12,22 +15,20 @@ type Props = {
 const SearchResult = ({ fetch, setFetch }: Props) => {
   const [searchParam] = useSearchParams();
   const { type } = useParams();
-  console.log(type);
   const {
     data: genres,
     isLoading: genresLoading,
     isError: genresError,
   } = useGenresMoviesData();
 
-  console.log(searchParam.get("rating"));
-
-  const { data, isLoading, isError, refetch } = useFilterData(
-    type,
-    1,
-    Number(searchParam.get("rating")),
-    searchParam.get("date"),
-    searchParam.get("genres")
-  );
+  const { data, isLoading, isError, refetch, hasNextPage, fetchNextPage } =
+    useFilterData(
+      type!,
+      Number(searchParam.get("rating")),
+      searchParam.get("date")!,
+      searchParam.get("genres")!,
+      searchParam.get("language")!
+    );
   useEffect(() => {
     if (fetch) {
       refetch();
@@ -38,8 +39,16 @@ const SearchResult = ({ fetch, setFetch }: Props) => {
     searchParam.get("rating"),
     searchParam.get("date"),
     searchParam.get("genres"),
+    searchParam.get("language"),
     fetch,
   ]);
+  const isBottom = useScrolledBottom();
+
+  useEffect(() => {
+    if (isBottom && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [isBottom]);
 
   if (isLoading || genresLoading) {
     return <p>Loading...</p>;
@@ -49,16 +58,20 @@ const SearchResult = ({ fetch, setFetch }: Props) => {
   }
 
   return (
-    <section className="py-6 px-12 mt-10 overflow-hidden relative bg-[#242529] rounded-sm">
-      <section className="wrapper grid grid-cols-6 gap-2">
-        {data?.data?.results.map((item) => {
+    <section className="py-6 px-12 mt-10 bg-[#242529] rounded-sm overflow-hidden">
+      <section className="wrapper grid grid-cols-responsive grid-rows-4 gap-2">
+        {data?.pages?.map((group, i) => {
           return (
-            <Item
-              key={item.id}
-              {...item}
-              genres={genres?.data?.genres}
-              type={type}
-            />
+            <Fragment key={i}>
+              {group.data.results.map((item: ItemType) => (
+                <div key={item.id} className="flex flex-col">
+                  <Item {...item} genres={genres?.data?.genres} type={type!} />
+                  <h1 className="mt-2 text-nowrap px-2 text-ellipsis overflow-hidden">
+                    {item.name || item.title}
+                  </h1>
+                </div>
+              ))}
+            </Fragment>
           );
         })}
       </section>
